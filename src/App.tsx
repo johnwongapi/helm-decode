@@ -29,8 +29,8 @@ const App: React.FC = () => {
         </svg>
       </a>
       <h1>Welcome to Helm Decode</h1>
-      <button onClick={toggleDarkMode} className="dark-mode-toggle">
-        {darkMode ? '☀️ Light' : '🌙 Dark'}
+      <button onClick={toggleDarkMode} className="dark-mode-toggle" aria-label={darkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}>
+        {darkMode ? '☀️' : '🌙'}
       </button>
       <HelmDecode darkMode={darkMode} />
     </div>

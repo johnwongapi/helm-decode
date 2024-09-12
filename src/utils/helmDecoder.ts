@@ -3,21 +3,22 @@ import pako from 'pako';
 import yaml from 'js-yaml';
 
 export const extractSecretData = (secret: string): string => {
+  const trimmedSecret = secret.trim()
   try {
-    const yamlData = yaml.load(secret) as any;
+    const yamlData = yaml.load(trimmedSecret) as any;
     if (yamlData.data && yamlData.data.release) {
       return yamlData.data.release;
     }
   } catch (yamlError) {
     try {
-      const jsonData = JSON.parse(secret);
+      const jsonData = JSON.parse(trimmedSecret);
       if (jsonData.data && jsonData.data.release) {
         return jsonData.data.release;
       }
     } catch (jsonError) {
     }
   }
-  return secret;
+  return trimmedSecret;
 };
 
 export const decodeBase64 = (data: string): string => {
@@ -47,3 +48,23 @@ export const decodeHelmSecret = (secret: string): string => {
   const decodedData = decodeBase64(secretData);
   return decompressGzip(decodedData);
 };
+
+export function beautifyHelmSecret(decodedSecret: string): string {
+  try {
+    // Parse the decoded secret as JSON
+    const jsonData = JSON.parse(decodedSecret);
+    
+    // Convert the JSON object to YAML
+    const yamlString = yaml.dump(jsonData, {
+      indent: 2,
+      lineWidth: -1, // Disable line wrapping
+      noRefs: true,  // Don't use YAML anchors and aliases
+    });
+
+    return yamlString;
+  } catch (error) {
+    // If parsing fails, return the original string
+    console.error('Failed to beautify Helm secret:', error);
+    return decodedSecret;
+  }
+}

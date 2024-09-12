@@ -4,6 +4,8 @@ A static, offline website that able to decode Helm3 resources in secrets
 ## Live Demo
 You can access the live version of this tool at: [https://helm-decode.tmp.me/](https://helm-decode.tmp.me/)
 
+![](image.png)
+
 ## Description
 This tool allows you to decode Helm3 resources stored in Kubernetes secrets. It's a static website that runs entirely in the browser, ensuring that your sensitive data never leaves your local machine.
 

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { decodeHelmSecret } from '../utils/helmDecoder';
+import { decodeHelmSecret, beautifyHelmSecret } from '../utils/helmDecoder';
 import { defaultInput } from '../constants/defaultInput';
 
 interface HelmDecodeProps {
@@ -11,14 +11,14 @@ const HelmDecode: React.FC<HelmDecodeProps> = ({ darkMode }) => {
   const [decodedOutput, setDecodedOutput] = useState('');
   const [beautifiedOutput, setBeautifiedOutput] = useState('');
   const [error, setError] = useState<string | null>(null);
-  const [outputType, setOutputType] = useState<'raw' | 'beautified'>('raw');
+  const [outputType, setOutputType] = useState<'raw' | 'beautified'>('beautified');
   const [copyMessage, setCopyMessage] = useState('');
 
   const handleDecode = () => {
     try {
       const decoded = decodeHelmSecret(input);
       setDecodedOutput(decoded);
-      const beautified = decoded.replace(/\\n/g, '\n');
+      const beautified = beautifyHelmSecret(decoded);
       setBeautifiedOutput(beautified);
       setError(null);
     } catch (e) {
@@ -115,20 +115,20 @@ const HelmDecode: React.FC<HelmDecodeProps> = ({ darkMode }) => {
             <button
               style={{
                 ...buttonStyle,
-                background: outputType === 'raw' ? (darkMode ? '#555' : '#ddd') : (darkMode ? '#3a3a3a' : '#f4f4f4'),
-              }}
-              onClick={() => setOutputType('raw')}
-            >
-              Raw
-            </button>
-            <button
-              style={{
-                ...buttonStyle,
                 background: outputType === 'beautified' ? (darkMode ? '#555' : '#ddd') : (darkMode ? '#3a3a3a' : '#f4f4f4'),
               }}
               onClick={() => setOutputType('beautified')}
             >
               Beautified
+            </button>
+            <button
+              style={{
+                ...buttonStyle,
+                background: outputType === 'raw' ? (darkMode ? '#555' : '#ddd') : (darkMode ? '#3a3a3a' : '#f4f4f4'),
+              }}
+              onClick={() => setOutputType('raw')}
+            >
+              Raw
             </button>
             <button onClick={handleCopy} style={copyButtonStyle} title="Copy to clipboard">
               <span role="img" aria-label="Copy">📋</span>
@@ -147,7 +147,7 @@ const HelmDecode: React.FC<HelmDecodeProps> = ({ darkMode }) => {
           {error ? (
             <span style={{ color: darkMode ? '#f88' : 'red' }}>{error}</span>
           ) : (
-            outputType === 'raw' ? decodedOutput : beautifiedOutput
+            outputType === 'beautified' ? beautifiedOutput : decodedOutput
           )}
         </pre>
       </div>
