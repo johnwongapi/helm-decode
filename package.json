@@ -11,7 +11,7 @@
   "keywords": ["react", "helm", "decode"],
   "author": "John Wong",
   "license": "MIT",
-  "homepage": "https://helm-decode.tmp.me/",
+  "homepage": "https://helm-decode.jojo.hk/",
   "dependencies": {
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

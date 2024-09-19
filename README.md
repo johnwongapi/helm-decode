@@ -2,7 +2,7 @@
 A static, offline website that able to decode Helm3 resources in secrets
 
 ## Live Demo
-You can access the live version of this tool at: [https://helm-decode.tmp.me/](https://helm-decode.tmp.me/)
+You can access the live version of this tool at: [https://helm-decode.jojo.hk/](https://helm-decode.jojo.hk/)
 
 ![](image.png)
 
@@ -16,7 +16,7 @@ This tool allows you to decode Helm3 resources stored in Kubernetes secrets. It'
 - Fully client-side processing for enhanced security
 
 ## Usage
-1. Visit the [Helm Decode Tool](https://helm-decode.tmp.me/)
+1. Visit the [Helm Decode Tool](https://helm-decode.jojo.hk/)
 2. Paste your Helm secret into the input area
 3. The decoded output will appear automatically on the right side
 
